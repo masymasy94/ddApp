@@ -2,5 +2,5 @@
 
 CREATE TABLE IF NOT EXISTS players (
                                        name varchar(20) primary key,
-                                       isMaster boolean default false
+                                       is_master boolean default false
 );
