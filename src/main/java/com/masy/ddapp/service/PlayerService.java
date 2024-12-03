@@ -8,4 +8,6 @@ public interface PlayerService {
     List<PlayerDto> findAll();
 
     String savePlayer(PlayerDto dto);
+
+    void deletePlayer(String name);
 }

@@ -2,6 +2,7 @@ package com.masy.ddapp.controller.support;
 
 
 import com.masy.ddapp.data.dto.ResponseDto;
+import com.masy.ddapp.exception.NotFoundException;
 import com.masy.ddapp.exception.PlayerAlreadyExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -26,17 +27,17 @@ public class RestExceptionHandler {
     public ResponseDto<Void> handle(Exception ex) {
 
         return ResponseDto.<Void>builder()
-                .message("Unexpected error: " + ex.getMessage())
+                .message("Unexpected error: %s ".formatted(ex.getMessage()))
                 .build();
     }
 
 
     @ExceptionHandler
     @ResponseStatus(BAD_REQUEST)
-    public ResponseDto<Void> handle(ConstraintViolationException e) {
+    public ResponseDto<Void> handle(ConstraintViolationException ex) {
 
         return ResponseDto.<Void>builder()
-                .message("Validation failed: " + e.getMessage())
+                .message("Validation failed: %s ".formatted(ex.getMessage()))
                 .build();
     }
 
@@ -58,7 +59,7 @@ public class RestExceptionHandler {
     public ResponseDto<Void> handle(BindException ex) {
 
         return ResponseDto.<Void>builder()
-                .message("Validation failed: " + ex.getMessage())
+                .message("Validation failed: %s ".formatted(ex.getMessage()))
                 .build();
     }
 
@@ -68,7 +69,7 @@ public class RestExceptionHandler {
     public ResponseDto<Void> handle(HttpMessageNotReadableException ex) {
 
         return ResponseDto.<Void>builder()
-                .message("Could not parse body: " + ex.getMessage())
+                .message("Could not parse body: %s ".formatted(ex.getMessage()))
                 .build();
     }
 
@@ -78,7 +79,7 @@ public class RestExceptionHandler {
     public ResponseDto<Void> handle(MethodArgumentTypeMismatchException ex) {
 
          return ResponseDto.<Void>builder()
-                .message("Parameter cannot be parsed to the correct type: " + ex.getMessage())
+                .message("Parameter cannot be parsed to the correct type: %s ".formatted(ex.getMessage()))
                 .build();
 
     }
@@ -95,6 +96,17 @@ public class RestExceptionHandler {
 
     }
 
+
+    @ExceptionHandler
+    @ResponseStatus(NOT_FOUND)
+    public ResponseDto<String> handle(NotFoundException ex) {
+
+        return ResponseDto.<String>builder()
+                .message("Target was not found")
+                .body(ex.getMessage())
+                .build();
+
+    }
 
 
 }

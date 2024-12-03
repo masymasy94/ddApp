@@ -1,4 +1,9 @@
 package com.masy.ddapp.exception;
 
-public class NotFoundException extends RuntimeException{
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
+public class NotFoundException extends RuntimeException {
 }

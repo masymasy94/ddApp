@@ -1,6 +1,7 @@
 package com.masy.ddapp.service.impl;
 
 import com.masy.ddapp.data.dto.PlayerDto;
+import com.masy.ddapp.exception.NotFoundException;
 import com.masy.ddapp.exception.PlayerAlreadyExistsException;
 import com.masy.ddapp.mapper.PlayerMapper;
 import com.masy.ddapp.repository.PlayerRepository;
@@ -36,5 +37,15 @@ public class PlayerServiceImpl implements PlayerService {
         }
 
         throw new PlayerAlreadyExistsException(dto.name());
+    }
+
+    @Override
+    public void deletePlayer(String name) {
+
+        if (playerRepository.countByName(name) == 0) {
+            throw new NotFoundException();
+        }
+
+        playerRepository.deleteById(name);
     }
 }

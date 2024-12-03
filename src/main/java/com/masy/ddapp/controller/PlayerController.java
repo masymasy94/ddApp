@@ -4,7 +4,6 @@ import com.masy.ddapp.data.dto.PlayerDto;
 import com.masy.ddapp.service.PlayerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +35,12 @@ public class PlayerController {
                 .header("location", name)
                 .build();
     }
+
+    @DeleteMapping("{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204 empty body or 404
+    public void deleteDevice(@PathVariable("name") String name) {
+        playerService.deletePlayer(name);
+    }
+
 
 }
