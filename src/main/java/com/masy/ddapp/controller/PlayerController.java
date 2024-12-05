@@ -12,20 +12,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @AllArgsConstructor
-@Validated
 @RequestMapping(value = "player", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PlayerController {
 
     private final PlayerService playerService;
 
+    // 200
     @GetMapping("all")
     public List<PlayerDto> getAllPlayers() {
         return playerService.findAll();
     }
 
-
+    // 201 or 400 validation
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> insertPlayer(@Valid @RequestBody PlayerDto dto) {
 
@@ -36,8 +37,9 @@ public class PlayerController {
                 .build();
     }
 
+    // 204 empty body or 404
     @DeleteMapping("{name}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // 204 empty body or 404
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDevice(@PathVariable("name") String name) {
         playerService.deletePlayer(name);
     }
