@@ -1,9 +1,7 @@
 package com.masy.ddapp.data.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.masy.ddapp.enums.PlayerType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,9 +13,10 @@ import lombok.Setter;
 public class Player {
     @Id
     @Column(name = "name")
-    String name;
+    private String name;
 
     @NotNull
-    @Column(name = "is_master")
-    boolean master;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private PlayerType type;
 }

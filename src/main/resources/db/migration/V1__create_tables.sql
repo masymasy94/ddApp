@@ -1,9 +1,7 @@
--- this script will be run every time the server is started
-
 CREATE TABLE IF NOT EXISTS players
 (
-    name      varchar(20) primary key,
-    is_master boolean default false
+    name varchar(20) primary key,
+    type ENUM ('PLAYER', 'MASTER') default 'PLAYER' not null
 );
 
 CREATE TABLE IF NOT EXISTS characters
@@ -24,9 +22,9 @@ CREATE TABLE IF NOT EXISTS characters
     maximum_hit_points   number                                not null default 0,
     current_hit_points   number                                not null default 0,
     temporary_hit_points number                                not null default 0,
-    hit_dice             ENUM ('d4', 'd6', 'd8', 'd10', 'd12') not null,
-    success_death_saves  ENUM ('0','1','2','3')                not null default '0',
-    failure_death_saves  ENUM ('0','1','2','3')                not null default '0',
+    hit_dice             ENUM ('D4', 'D6', 'D8', 'D10', 'D12') not null,
+    success_death_saves  int                                   not null default 0 check success_death_saves between 0 and 3,
+    failure_death_saves  int                                   not null default 0 check failure_death_saves between 0 and 3,
     languagese           varchar(255),
     proficiencies        varchar(255),
     features_and_traits  varchar(255)
@@ -36,25 +34,24 @@ CREATE TABLE IF NOT EXISTS characters
 CREATE TABLE IF NOT EXISTS character_modifiers
 (
     character_name varchar(20) primary key,
-    strength       number not null default 0,
-    dexterity      number not null default 0,
-    constitution   number not null default 0,
-    intelligence   number not null default 0,
-    wisdom         number not null default 0,
-    charisma       number not null default 0
+    strength       int not null default 0,
+    dexterity      int not null default 0,
+    constitution   int not null default 0,
+    intelligence   int not null default 0,
+    wisdom         int not null default 0,
+    charisma       int not null default 0
 );
 
 
-CREATE TABLE IF NOT EXISTS equipment
+CREATE TABLE IF NOT EXISTS character_equipment
 (
-    id                 uuid primary key,
-    character_name     varchar(20)                                                                                                                                      not null,
-    name               varchar(20)                                                                                                                                      not null,
-    description        varchar(255),
-    modifier           ENUM ('STR','DEX', 'CON', 'INT', 'WIS', 'CHA')                                                                                                   not null,
-    damage_dice        ENUM ('d2','d4','d6','d8','d10','d12','d20', 'custom')                                                                                           not null,
-    damage_dice_number int                                                                                                                                              not null default 1,
-    damage_type        ENUM ('BLUDGEONING','PIERCING', 'SLASHING', 'ACID', 'COLD', 'FIRE', 'FORCE', 'LIGHTNING', 'NECROTIC', 'POISON', 'PSYCHIC', 'RADIANT', 'THUNDER') not null
+    id                  uuid primary key,
+    character_name      varchar(20)                                                                                                                                      not null,
+    name                varchar(20)                                                                                                                                      not null,
+    description         varchar(255),
+    modifier            ENUM ('STR','DEX', 'CON', 'INT', 'WIS', 'CHA')                                                                                                   not null,
+    damage_dice         ENUM ('D2','D4','D6','D8','D10','D12','D20')  array not null default array[0],
+    damage_type         ENUM ('BLUDGEONING','PIERCING', 'SLASHING', 'ACID', 'COLD', 'FIRE', 'FORCE', 'LIGHTNING', 'NECROTIC', 'POISON', 'PSYCHIC', 'RADIANT', 'THUNDER') not null
 );
 
 CREATE TABLE IF NOT EXISTS character_proficiencies
@@ -114,7 +111,7 @@ CREATE TABLE IF NOT EXISTS character_spells
 
 CREATE TABLE IF NOT EXISTS spells
 (
-    name        varchar(20),
+    name        varchar(20) primary key,
     description varchar,
     level       int,
     school      varchar(20),
@@ -122,8 +119,10 @@ CREATE TABLE IF NOT EXISTS spells
     time        varchar(20),
     range       varchar(20),
     duration    varchar(20),
-    components  varchar(20)
+    components  varchar(20),
+    type        enum ('STANDARD', 'CUSTOM') not null
 );
+
 
 
 
