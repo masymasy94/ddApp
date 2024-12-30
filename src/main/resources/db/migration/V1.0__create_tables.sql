@@ -144,8 +144,29 @@ CREATE TABLE IF NOT EXISTS magic_items
     PLAYER_CREATOR varchar2(20)
 );
 
-
-
-
+CREATE TABLE IF NOT EXISTS monsters
+(
+    name            varchar2(50) primary key,
+    size            varchar2 not null,
+    type            varchar2 not null,
+    alignment       varchar2 not null,
+    armor_class              varchar2 not null,
+    hp              varchar2 not null,
+    speeds          varchar2 not null,
+    str             varchar2 not null,
+    dex             varchar2 not null,
+    con             varchar2 not null,
+    int             varchar2 not null,
+    wis             varchar2 not null,
+    cha             varchar2 not null,
+    sav_throws      varchar2 not null,
+    skills          varchar2 not null,
+    traits          varchar2 not null,
+    senses          varchar2 not null,
+    languages       varchar2 not null,
+    cr              varchar2 not null,
+    additional_info varchar2 not null,
+    font            varchar2 not null
+);
 
 
