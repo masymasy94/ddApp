@@ -2,6 +2,7 @@ package com.masy.ddapp.controller.support;
 
 
 import com.masy.ddapp.data.dto.ResponseDto;
+import com.masy.ddapp.exception.MagicItemAlreadyExistsException;
 import com.masy.ddapp.exception.NotFoundException;
 import com.masy.ddapp.exception.PlayerAlreadyExistsException;
 import lombok.extern.slf4j.Slf4j;
@@ -92,6 +93,17 @@ public class RestExceptionHandler {
         return ResponseDto.<String>builder()
                 .message("Target player already exists")
                 .body(ex.getPlayerName())
+                .build();
+
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(BAD_REQUEST)
+    public ResponseDto<String> handle(MagicItemAlreadyExistsException ex) {
+
+        return ResponseDto.<String>builder()
+                .message("Target magic item already exists")
+                .body(ex.getMItemName())
                 .build();
 
     }
