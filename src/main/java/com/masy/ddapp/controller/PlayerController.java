@@ -1,7 +1,9 @@
 package com.masy.ddapp.controller;
 
 import com.masy.ddapp.data.dto.PlayerDto;
-import com.masy.ddapp.service.PlayerService;
+import com.masy.ddapp.service.player.PlayerDeleteService;
+import com.masy.ddapp.service.player.PlayerFindAllService;
+import com.masy.ddapp.service.player.PlayerSaveService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,22 +17,24 @@ import java.util.List;
 @Validated
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "player", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "players", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PlayerController {
 
-    private final PlayerService playerService;
+    private final PlayerFindAllService playerFindAllService;
+    private final PlayerDeleteService playerDeleteService;
+    private final PlayerSaveService playerSaveService;
 
     // 200
-    @GetMapping("all")
+    @GetMapping()
     public List<PlayerDto> getAllPlayers() {
-        return playerService.findAll();
+        return playerFindAllService.findAll();
     }
 
     // 201 or 400 validation
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> insertPlayer(@Valid @RequestBody PlayerDto dto) {
 
-        String name = playerService.savePlayer(dto);
+        String name = playerSaveService.savePlayer(dto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header("location", name)
@@ -41,7 +45,7 @@ public class PlayerController {
     @DeleteMapping("{name}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDevice(@PathVariable("name") String name) {
-        playerService.deletePlayer(name);
+        playerDeleteService.deletePlayer(name);
     }
 
 
