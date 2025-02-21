@@ -1,5 +1,6 @@
 package com.masy.ddapp.service.player.impl;
 
+import com.masy.ddapp.exception.NotFoundException;
 import com.masy.ddapp.repository.PlayerRepository;
 import com.masy.ddapp.service.player.PlayerDeleteService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,9 @@ public class PlayerDeleteServiceImpl implements PlayerDeleteService {
 
     @Override
     public void deletePlayer(String name) {
-        playerRepository.deleteById(name);
+        playerRepository.findById(name).ifPresentOrElse(
+                playerRepository::delete,
+                () -> {throw new NotFoundException();}
+        );
     }
 }

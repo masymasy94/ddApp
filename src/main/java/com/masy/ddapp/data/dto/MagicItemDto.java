@@ -6,9 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record MagicItemDto(@NotNull @NotEmpty String name,
                            @NotNull @NotEmpty String description,
-                           @NotNull  String rarity,
-                           @NotNull Boolean  attunement,
+                           @NotNull String rarity,
+                           @NotNull Boolean attunement,
                            @NotNull String type,
-                           @NotNull @NotEmpty String playerCreator
-                           )
-{}
+                           @NotNull @NotEmpty String playerCreator) {}
