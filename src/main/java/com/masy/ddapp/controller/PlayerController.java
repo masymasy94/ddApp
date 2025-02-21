@@ -17,7 +17,7 @@ import java.util.List;
 @Validated
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "players", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/v1/players", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PlayerController {
 
     private final PlayerFindAllService playerFindAllService;

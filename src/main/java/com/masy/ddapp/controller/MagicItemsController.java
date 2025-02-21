@@ -19,7 +19,7 @@ import java.util.List;
 @Validated
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "magic-items", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/v1/magic-items", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MagicItemsController {
 
     private final MagicItemsPagedFindService magicItemsPagedFindService;
